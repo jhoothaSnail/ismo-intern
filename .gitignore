@@ -1,0 +1,49 @@
+# deps
+node_modules/
+.pnp
+.pnp.js
+
+# build
+dist/
+build/
+out/
+.next/
+.expo/
+
+# env
+.env
+.env.*
+!.env.example
+
+# test / coverage
+coverage/
+*.lcov
+.vitest-cache/
+
+# android / ios
+android/
+ios/
+*.jks
+*.keystore
+*.p8
+*.p12
+*.cer
+google-services.json
+GoogleService-Info.plist
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+logs/
+pino.log
+
+# misc
+.turbo/
+*.tsbuildinfo
