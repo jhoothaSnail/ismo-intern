@@ -13,7 +13,7 @@
       },
       "distribution": "internal",
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://YOUR_API_HOST"
+        "EXPO_PUBLIC_API_URL": "https://ismo-api-254d.onrender.com"
       }
     },
     "production": {
