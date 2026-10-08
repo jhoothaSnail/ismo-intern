@@ -35,17 +35,14 @@ COPY apps/api/package.json ./apps/api/
 COPY apps/web/package.json ./apps/web/
 COPY apps/mobile/package.json ./apps/mobile/
 
+# Prisma schema (needed for postinstall generation and migrate deploy)
+COPY apps/api/prisma ./apps/api/prisma
+
 RUN pnpm install --frozen-lockfile --prod
 
 # Built artifacts from builder
 COPY --from=builder /app/packages/contracts/dist ./packages/contracts/dist
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
-
-# Prisma generated client and query engine (lives in root node_modules with hoisting)
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-
-# Prisma schema (needed for migrate deploy in release step)
-COPY apps/api/prisma ./apps/api/prisma
 
 RUN addgroup -S nodejs -g 1001 && adduser -S apiuser -u 1001 -G nodejs && \
     chown -R apiuser:nodejs /app
