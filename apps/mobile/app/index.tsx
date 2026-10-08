@@ -6,14 +6,24 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000';
 
 function HomeScreen() {
   const [status, setStatus] = useState<string>('loading');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
+    console.log(`[API CHECK] Attempting to fetch: ${API_URL}/api/health`);
     fetch(`${API_URL}/api/health`)
-      .then((res) => res.json())
-      .then((body: any) => {
-        setStatus(body.data.status === 'ok' ? 'ok' : 'error');
+      .then(async (res) => {
+        console.log(`[API CHECK] Response status: ${res.status}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const body = await res.json();
+        setStatus(body?.data?.status === 'ok' ? 'ok' : 'error');
       })
-      .catch(() => setStatus('error'));
+      .catch((err) => {
+        console.error(`[API CHECK] Fetch failed:`, err);
+        setStatus('error');
+        setErrorMessage(err.message || 'Unknown error');
+      });
   }, []);
 
   const statusColor =
@@ -23,9 +33,18 @@ function HomeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>PMS — Walking Skeleton</Text>
       <Text style={styles.label}>
+        Target URL:{' '}
+        <Text style={styles.code}>{API_URL}</Text>
+      </Text>
+      <Text style={styles.label}>
         API health:{' '}
         <Text style={{ fontWeight: '600', color: statusColor }}>{status}</Text>
       </Text>
+      {errorMessage ? (
+        <Text style={{ color: '#f87171', fontSize: 12, marginTop: 4 }}>
+          {errorMessage}
+        </Text>
+      ) : null}
       <Text style={styles.label}>
         ProjectStatus.NOT_STARTED:{' '}
         <Text style={styles.code}>{ProjectStatus.NOT_STARTED}</Text>
