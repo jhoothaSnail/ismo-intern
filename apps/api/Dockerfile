@@ -8,6 +8,8 @@ RUN corepack enable
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
 COPY packages/contracts/package.json ./packages/contracts/
 COPY apps/api/package.json ./apps/api/
+COPY apps/web/package.json ./apps/web/
+COPY apps/mobile/package.json ./apps/mobile/
 
 RUN pnpm install --frozen-lockfile
 
@@ -30,6 +32,8 @@ RUN corepack enable
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml* ./
 COPY packages/contracts/package.json ./packages/contracts/
 COPY apps/api/package.json ./apps/api/
+COPY apps/web/package.json ./apps/web/
+COPY apps/mobile/package.json ./apps/mobile/
 
 RUN pnpm install --frozen-lockfile --prod
 
