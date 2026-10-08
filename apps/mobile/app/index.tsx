@@ -2,17 +2,15 @@ import { ProjectStatus } from '@pms/contracts';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-type HealthStatus = 'loading' | 'ok' | 'error';
-
 const API_URL = process.env['EXPO_PUBLIC_API_URL'] ?? 'http://localhost:3000';
 
-export default function HomeScreen() {
-  const [status, setStatus] = useState<HealthStatus>('loading');
+function HomeScreen() {
+  const [status, setStatus] = useState<string>('loading');
 
   useEffect(() => {
     fetch(`${API_URL}/api/health`)
       .then((res) => res.json())
-      .then((body: { data: { status: string } }) => {
+      .then((body: any) => {
         setStatus(body.data.status === 'ok' ? 'ok' : 'error');
       })
       .catch(() => setStatus('error'));
@@ -26,7 +24,7 @@ export default function HomeScreen() {
       <Text style={styles.title}>PMS — Walking Skeleton</Text>
       <Text style={styles.label}>
         API health:{' '}
-        <Text style={[styles.status, { color: statusColor }]}>{status}</Text>
+        <Text style={{ fontWeight: '600', color: statusColor }}>{status}</Text>
       </Text>
       <Text style={styles.label}>
         ProjectStatus.NOT_STARTED:{' '}
@@ -35,6 +33,8 @@ export default function HomeScreen() {
     </View>
   );
 }
+
+export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
