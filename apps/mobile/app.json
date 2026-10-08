@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "PMS",
+    "slug": "pms",
+    "version": "1.0.0",
+    "scheme": "pms",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "package": "com.supreme.pms",
+      "adaptiveIcon": {
+        "backgroundColor": "#030712"
+      }
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
